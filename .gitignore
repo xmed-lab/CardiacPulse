@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# Training / eval outputs
+results/
+cache/
+wandb/
+lightning_logs/
+*.log
+
+# Data & checkpoints (host weights externally)
+data/
+*.ckpt
+*.pt
+*.pth
+
+# Media scratch
+*.mp4
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# shipped decoder weights
+!models/decoder.pt

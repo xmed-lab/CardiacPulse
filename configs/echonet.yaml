@@ -1,0 +1,58 @@
+# CardiacPULSE — EchoNet-Dynamic training config
+# Fourier Cardiac Phase Network: per-pixel temporal FFT on raw pixel
+# intensities. Fourier amplitude at the cardiac frequency forms a natural
+# spatial mask; the weighted-average intensity is a 1x-HR signal.
+#
+# Core losses: spectral, phase, coverage, align.
+# (band / mask_tv / amp are disabled — found redundant; see paper ablation.)
+#
+# Training:
+#   CUDA_VISIBLE_DEVICES=0 python train.py --config configs/echonet.yaml
+#
+# Evaluation:
+#   CUDA_VISIBLE_DEVICES=0 python evaluate.py \
+#     --checkpoint checkpoints/echonet_best.ckpt \
+#     --data_root /path/to/EchoNet-Dynamic --split test
+
+experiment_name: cardiacpulse_echonet
+
+data:
+  echonet_root: '/path/to/EchoNet-Dynamic'   # contains Videos/, FileList.csv, VolumeTracings.csv
+  cache_dir: './cache'                        # preprocessed-clip cache (created on first run)
+  num_frames: 64
+  period: 2                # Temporal downsampling: 50fps -> 25fps effective
+  batch_size: 16
+  num_workers: 4
+
+model:
+  spatial_hidden: 32        # Channels in spatial attention CNN
+  fps: 25.0                 # Effective fps after period=2
+  cardiac_low_hz: 0.5       # Min cardiac frequency
+  cardiac_high_hz: 4.0      # Max cardiac frequency
+  mask_combine_mode: 'product'   # 'product' (cnn * fourier) or 'cnn_only'
+  n_avg_bins: 3             # Number of FFT bins to average around cardiac freq
+  mask_min_floor: 0.02      # Hard floor: mask >= 0.02 everywhere
+
+losses:
+  lambda_spectral: 1.0      # Spectral peak loss
+  lambda_band: 0.0          # DISABLED (overlaps with spectral)
+  lambda_phase: 1.0         # Phase coherence loss
+  lambda_align: 0.5         # CNN-Fourier mask alignment
+  lambda_coverage: 10.0     # Dominant anti-collapse term
+  lambda_mask_tv: 0.0       # DISABLED (CNN learns smoothness)
+  lambda_amp: 0.0           # DISABLED (redundant with coverage)
+  amp_threshold: 0.01
+  target_coverage: 0.1      # Target mask coverage (10% of image)
+  coverage_barrier_coeff: 0.1   # Strong log barrier
+
+training:
+  lr: 0.001
+  weight_decay: 0.01
+  max_epochs: 200
+  patience: 40
+  seed: 42
+
+output_dir: './results/cardiacpulse_echonet'
+
+logging:
+  project: 'cardiacpulse'
