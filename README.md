@@ -62,17 +62,38 @@ python evaluate_cameo.py --results_dir /path/to/cameo_checkpoints --data_root /p
 
 ## Citation
 
+If you find this work useful, please consider citing:
+
 ```bibtex
-@inproceedings{cardiacpulse2026,
-  title     = {CardiacPULSE: Frequency-Aware Self-Supervised Cardiac Phase Detection in Echocardiography},
-  author    = {TODO: author list},
-  booktitle = {Medical Image Computing and Computer-Assisted Intervention (MICCAI)},
-  year      = {2026}
+@inproceedings{guo2026cardiacpulse,
+  title={CardiacPULSE: Frequency-Aware Self-supervised Cardiac Phase Detection in Echocardiography},
+  author={Guo, Jiarong and Yang, Jiewen and Du, Yao and Qin, Yi and Li, Xiaomeng},
+  booktitle={International Conference on Medical Image Computing and Computer-Assisted Intervention},
+  pages={76--86},
+  year={2026},
+  organization={Springer}
 }
 ```
 
-This work builds on [CardiacPhase](https://github.com/YingyuYyy/CardiacPhase) (Yang et al., MICCAI 2025).
+Please also consider citing [CardiacPhase](https://github.com/YingyuYyy/CardiacPhase), which this work builds upon:
+
+```bibtex
+@inproceedings{yang2025latent,
+  title={Latent motion profiling for annotation-free cardiac phase detection in adult and fetal echocardiography videos},
+  author={Yang, Yingyu and Yang, Qianye and Cui, Kangning and Peng, Can and D’Alberti, Elena and Hernandez-Cruz, Netzahualcoyotl and Patey, Olga and Papageorghiou, Aris T and Noble, J Alison},
+  booktitle={International Conference on Medical Image Computing and Computer-Assisted Intervention},
+  pages={316--325},
+  year={2025},
+  organization={Springer}
+}
+```
 
 ## License
 
-[CC BY-NC 4.0](LICENSE)
+Unless otherwise noted, this repository is licensed under the [Creative Commons Attribution-NonCommercial 4.0 International](LICENSE) (CC BY-NC 4.0) license. The [official license text](https://creativecommons.org/licenses/by-nc/4.0/legalcode.txt) is included in `LICENSE` without modification.
+
+Noncommercial use, modification, and redistribution are permitted under the license terms. When sharing the material or modified versions, give appropriate credit, retain the required notices, link to the license, and indicate any changes. **Commercial use is not permitted under this license** and requires separate permission from the relevant rights holders.
+
+This work builds upon [CardiacPhase](https://github.com/YingyuYyy/CardiacPhase) by Yang et al. (MICCAI 2025), distributed under CC BY-NC 4.0. Its dataset-loading code has been adapted and integrated into CardiacPULSE; the original upstream license notice is preserved verbatim in [licenses/CardiacPhase-LICENSE](licenses/CardiacPhase-LICENSE). The existing attribution to [TVAE](https://github.com/alain-ryser/tvae) in `datasets/echonet.py` is retained.
+
+Third-party material and dependencies retain their respective terms. EchoNet-Dynamic and CAMEO datasets are governed by their providers' terms; this repository's license does not grant rights to those datasets or override third-party terms. Separate permission for commercial use must cover any third-party material involved.
